@@ -1,0 +1,28 @@
+{
+  "name": "tasknull",
+  "version": "0.1.0",
+  "description": "Anonymous, nullifier-backed proof-of-completion for on-chain bounties — reference CLI.",
+  "bin": {
+    "tasknull": "bin/tasknull.js"
+  },
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md"
+  ],
+  "keywords": [
+    "tasknull",
+    "bounty",
+    "nullifier",
+    "proof-of-completion",
+    "zero-knowledge",
+    "base",
+    "privacy",
+    "cli"
+  ],
+  "license": "MIT"
+}

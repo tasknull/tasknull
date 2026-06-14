@@ -8,6 +8,7 @@ Anonymous, nullifier-backed proof-of-completion for on-chain bounties — settle
 
 [![Website](https://img.shields.io/badge/website-tasknull.vercel.app-f2b441?style=flat-square)](https://tasknull.vercel.app)
 [![X](https://img.shields.io/badge/follow-@TaskNull-1da1f2?style=flat-square&logo=x&logoColor=white)](https://x.com/TaskNull)
+[![CLI](https://img.shields.io/badge/CLI-v0.1.0-f97316?style=flat-square)](cli/)
 [![Base](https://img.shields.io/badge/settled%20on-Base-0052ff?style=flat-square)](https://base.org)
 [![License: MIT](https://img.shields.io/badge/license-MIT-63cad6?style=flat-square)](LICENSE)
 
@@ -24,27 +25,110 @@ Today, claiming a bounty usually means doxxing yourself: either your wallet is a
 payout for everyone to trace, or your contribution can't be trusted. tasknull adds a third path:
 **provable completion, unlinkable identity.**
 
-This repository contains the **official website / landing page** for the project.
+This repository contains the **`tasknull` CLI** (the tool you actually use) and the project's
+**website**.
 
-> **Status:** pre-launch. The interactive verifier, registry, and nullifier wall on the site are
-> front-end demonstrations of the protocol concept. The `$TNULL` contract address is **TBA** and
-> will be announced at launch.
+> **Status:** the CLI is a working **v0.1 reference implementation** — the cryptography
+> (identity, commitments, nullifiers, signatures, double-claim prevention) is real and runs
+> locally. On-chain settlement on Base is **simulated locally** until the `$TNULL` contract
+> launches (contract address **TBA**).
 
 ## Table of contents
 
+- [Quick start (use it now)](#quick-start-use-it-now)
+- [Install the CLI](#install-the-cli)
+- [CLI commands](#cli-commands)
+- [How it works](#how-it-works)
 - [Why](#why)
 - [Key features](#key-features)
-- [How it works](#how-it-works)
 - [The $TNULL token](#the-tnull-token)
-- [Tech stack](#tech-stack)
-- [3D animated background](#3d-animated-background)
 - [Project structure](#project-structure)
-- [Getting started](#getting-started)
-- [Regenerating assets](#regenerating-assets)
-- [Deployment](#deployment)
+- [The website](#the-website)
+- [Tech stack](#tech-stack)
 - [Links](#links)
 - [Disclaimer](#disclaimer)
 - [License](#license)
+
+## Quick start (use it now)
+
+Requires **Node.js ≥ 18**.
+
+```bash
+git clone https://github.com/tasknull/tasknull.git
+cd tasknull/cli
+npm install -g .          # adds the `tasknull` command (or use: node bin/tasknull.js)
+
+# create your identity — your secret never leaves this machine
+tasknull init
+
+# prove you finished a bounty, payable to a fresh address you control
+echo "my fix for the reentrancy bug" > solution.txt
+tasknull prove --bounty zk-audit-114 --file solution.txt \
+  --to 0x1111111111111111111111111111111111111111 --out proof.json
+
+# anyone can verify it — then settling burns the nullifier
+tasknull verify proof.json
+tasknull claim proof.json
+
+# try to claim the same work twice → rejected (no double-claims)
+tasknull claim proof.json
+```
+
+Full CLI docs: **[cli/README.md](cli/README.md)**.
+
+## Install the CLI
+
+```bash
+# from the cloned repo
+cd tasknull/cli
+npm install -g .                 # global `tasknull` command
+
+# or run without installing
+node bin/tasknull.js --help
+```
+
+The CLI has **zero dependencies** (only Node's built-in `crypto`). State is stored in
+`~/.tasknull` (override with the `TASKNULL_HOME` env var).
+
+## CLI commands
+
+| Command | What it does |
+|---|---|
+| `tasknull init` | Create your local identity (`secret` + Ed25519 keys). |
+| `tasknull whoami` | Print your public identity commitment. |
+| `tasknull commit --bounty <id> --file <path>` | Publish a hiding commitment for a solution. |
+| `tasknull prove --bounty <id> --file <path> --to <0x…>` | Emit a signed proof + one-way nullifier (`--out`, `--scope`, `--reward`). |
+| `tasknull verify <proof.json>` | Verify signature, structure, nullifier freshness, scope. |
+| `tasknull claim <proof.json>` | Settle a proof — burns the nullifier locally. |
+| `tasknull spent` | List nullifiers spent on this machine. |
+
+## How it works
+
+Three steps, one CLI. The signing happens entirely on your machine — no coordinator, no custodian, no account.
+
+```bash
+# 0. one-time — create your local identity
+tasknull init
+
+# 1. COMMIT — lock your solution to a bounty's criteria
+tasknull commit --bounty zk-audit-114 --file ./solution.txt
+
+# 2. PROVE — derive a nullifier from your secret and sign the completion proof
+tasknull prove --bounty zk-audit-114 --file ./solution.txt --to 0xYourFreshAddress --out proof.json
+
+# 3. SETTLE — anyone verifies; claiming burns the nullifier so it can't be reused
+tasknull verify proof.json
+tasknull claim proof.json
+```
+
+Under the hood:
+
+- **Identity** — a 32-byte secret + Ed25519 keypair, generated and stored locally.
+- **Commitment** — `SHA256(bounty ‖ SHA256(solution) ‖ secret)` binds your work without revealing it.
+- **Nullifier** — `SHA256("nullifier" ‖ secret ‖ bounty)`: deterministic per `(secret, bounty)`, so
+  the same work can't be claimed twice, yet it leaks nothing about your secret.
+- **Proof** — a signed JSON object; verification re-checks the Ed25519 signature over the exact
+  payload, so any tampering is caught.
 
 ## Why
 
@@ -58,24 +142,9 @@ People who ship sensitive work quietly need to get paid without revealing who th
 
 | | Feature | Description |
 |---|---|---|
-| ✓ | **Verifiable completion** | Every claim carries a proof that the bounty's acceptance criteria were met. Reviewers check the math, not your reputation. |
+| ✓ | **Verifiable completion** | Every claim carries a proof that the bounty's criteria were met. Reviewers check the math, not your reputation. |
 | ∅ | **Unlinkable identity** | The payout wallet and the proof are cryptographically separated. A verifier learns *"valid hunter"*, never *which* hunter. |
-| ⊘ | **No double-claims** | Each claim emits a one-way **nullifier**. Reuse the same solution twice and the second nullifier collides — the chain rejects it. |
-
-## How it works
-
-Three steps, one CLI. The signing happens entirely on your machine — no coordinator, no custodian, no account.
-
-```bash
-# 1. COMMIT — lock your solution against the bounty's criteria
-tasknull commit --bounty zk-audit-114
-
-# 2. PROVE — derive a nullifier from your secret and sign the completion proof
-tasknull prove --reveal ./solution
-
-# 3. SETTLE — anyone can verify; once it checks out, the reward releases to a fresh address
-tasknull claim --to 0xYOUR...
-```
+| ⊘ | **No double-claims** | Each claim emits a one-way **nullifier**. Reuse the same solution twice and the second nullifier collides — the claim is rejected. |
 
 ## The $TNULL token
 
@@ -92,101 +161,52 @@ tasknull claim --to 0xYOUR...
 - **Network:** Base (L2)
 - **Contract:** `TBA` — announced at launch. Always verify the official address before transacting.
 
-## Tech stack
-
-- **Static front-end** — a single `index.html` (no framework, no build step required to run).
-- **HTML + CSS** — custom dark theme, CSS variables, fully responsive.
-- **Vanilla JavaScript** — terminal typing animation, animated counters, interactive nullifier wall, demo verifier, scroll reveals.
-- **[Three.js](https://threejs.org)** — the 3D animated background (loaded from CDN via an import map).
-- **[Vercel](https://vercel.com)** — hosting & deployment.
-- Build tooling: **[sharp](https://sharp.pixelplumbing.com)** (Node) and **[Pillow](https://python-pillow.org)** (Python) for generating logo / favicon / OG / banner assets.
-
-## 3D animated background
-
-The hero renders a live **WebGL** scene with Three.js:
-
-- a rotating **particle cloud** (amber / orange / cyan, additive glow) on a spherical shell,
-- two counter-rotating **wireframe icosahedrons** for a crystalline / network feel,
-- **mouse parallax** on the camera and **exponential fog** for depth.
-
-It is implemented to be considerate:
-
-- respects `prefers-reduced-motion` (renders a single static frame),
-- **pauses when the tab is hidden** (saves battery / GPU),
-- caps device pixel ratio at 2,
-- **removes itself gracefully** if WebGL is unavailable — the site keeps working.
-
 ## Project structure
 
 ```
 tasknull/
-├─ index.html              # Landing page (hero, sections, 3D background, all logic)
+├─ cli/                    # the `tasknull` command-line tool (Node, zero deps)
+│  ├─ bin/tasknull.js      #   executable entry point
+│  ├─ src/
+│  │  ├─ cli.js            #   argument parsing + commands
+│  │  ├─ crypto.js         #   ed25519 / sha256 / nullifier / commitment
+│  │  └─ store.js          #   local identity + spent-nullifier registry
+│  ├─ package.json
+│  └─ README.md            #   full CLI docs
+├─ index.html              # Landing page (hero, sections, 3D background)
 ├─ terms.html              # Terms of Use
 ├─ privacy.html            # Privacy Policy
-├─ assets/
-│  ├─ logo.jpg             # Master logo (source of truth)
-│  ├─ logo-64.png          # Small logo used in the nav / footer
-│  ├─ favicon.png          # Browser tab icon
-│  ├─ apple-touch-icon.png # iOS / home-screen icon
-│  ├─ og-image.png         # 1200×630 social share image
-│  └─ banner.svg           # Animated README banner (self-contained)
-├─ build/                  # Asset-generation scripts (not needed at runtime)
-│  ├─ genfav.js            # favicon + apple-touch-icon from logo.jpg (sharp)
-│  ├─ og.py               # logo-64 + og-image from logo.jpg (Pillow)
-│  ├─ banner.py            # animated banner.svg (embeds the logo)
-│  └─ package.json
+├─ assets/                 # logo, favicon, OG image, animated README banner
+├─ build/                  # asset-generation scripts (logos, OG, banner)
 ├─ .gitignore
 ├─ LICENSE
 └─ README.md
 ```
 
-## Getting started
+## The website
 
-It's a static site — no build step needed to run it.
+The marketing site lives at the repo root as a single static `index.html` (plus `terms.html`
+and `privacy.html`). It's deployed on **Vercel** at **[tasknull.vercel.app](https://tasknull.vercel.app)**.
+
+Run it locally:
 
 ```bash
-git clone https://github.com/tasknull/tasknull.git
-cd tasknull
-
-# Option A: just open index.html in your browser
-
-# Option B: serve locally (recommended, so all paths resolve)
+# from the repo root — it's a static site, no build step needed
 python -m http.server 8000
-# then visit http://localhost:8000
+# then open http://localhost:8000
 ```
 
-> The 3D background loads Three.js from a CDN, so an internet connection is needed for that effect.
+> The hero's 3D background loads Three.js from a CDN, so an internet connection is needed for that effect.
 
-## Regenerating assets
+Rebuild generated images from `assets/logo.jpg` with the scripts in `build/`
+(`node build/genfav.js`, `python build/og.py`, `python build/banner.py`).
 
-All generated images can be rebuilt from `assets/logo.jpg` using the scripts in `build/`.
+## Tech stack
 
-```bash
-# Favicon + apple-touch-icon  (Node + sharp)
-cd build
-npm install
-node genfav.js
-
-# Small logo + OG share image  (Python + Pillow)
-pip install pillow
-python og.py
-
-# Animated README banner
-python banner.py
-```
-
-> `og.py` uses Windows system fonts (Segoe UI) for the OG image text; on other platforms it falls
-> back to a default font.
-
-## Deployment
-
-The site is deployed on **Vercel**:
-
-```bash
-vercel deploy --prod
-```
-
-Or connect the repository to Vercel for automatic deployments on push.
+- **CLI** — Node.js (≥ 18), zero dependencies, standard `crypto` (Ed25519 + SHA-256).
+- **Website** — static `index.html`, custom CSS, vanilla JS, [Three.js](https://threejs.org) for the 3D background.
+- **Hosting** — [Vercel](https://vercel.com).
+- **Asset tooling** — [sharp](https://sharp.pixelplumbing.com) (Node) and [Pillow](https://python-pillow.org) (Python).
 
 ## Links
 
