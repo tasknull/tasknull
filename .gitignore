@@ -1,0 +1,15 @@
+# dependencies
+node_modules/
+build/node_modules/
+
+# vercel
+.vercel
+
+# python
+__pycache__/
+*.pyc
+
+# os / editor
+.DS_Store
+Thumbs.db
+*.log
