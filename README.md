@@ -6,7 +6,7 @@
 
 Anonymous, nullifier-backed proof-of-completion for on-chain bounties — settled on Base.
 
-[![Website](https://img.shields.io/badge/website-tasknull.vercel.app-f2b441?style=flat-square)](https://tasknull.vercel.app)
+[![Website](https://img.shields.io/badge/website-tasknull.art-f2b441?style=flat-square)](https://tasknull.art)
 [![X](https://img.shields.io/badge/follow-@TaskNull-1da1f2?style=flat-square&logo=x&logoColor=white)](https://x.com/TaskNull)
 [![CLI](https://img.shields.io/badge/CLI-v0.1.0-f97316?style=flat-square)](cli/)
 [![Base](https://img.shields.io/badge/settled%20on-Base-0052ff?style=flat-square)](https://base.org)
@@ -186,7 +186,7 @@ tasknull/
 ## The website
 
 The marketing site lives at the repo root as a single static `index.html` (plus `terms.html`
-and `privacy.html`). It's deployed on **Vercel** at **[tasknull.vercel.app](https://tasknull.vercel.app)**.
+and `privacy.html`). It's published via **GitHub Pages** at **[tasknull.art](https://tasknull.art)** — every push to `main` redeploys.
 
 Run it locally:
 
@@ -205,12 +205,12 @@ Rebuild generated images from `assets/logo.jpg` with the scripts in `build/`
 
 - **CLI** — Node.js (≥ 18), zero dependencies, standard `crypto` (Ed25519 + SHA-256).
 - **Website** — static `index.html`, custom CSS, vanilla JS, [Three.js](https://threejs.org) for the 3D background.
-- **Hosting** — [Vercel](https://vercel.com).
+- **Hosting** — [GitHub Pages](https://pages.github.com) (custom domain).
 - **Asset tooling** — [sharp](https://sharp.pixelplumbing.com) (Node) and [Pillow](https://python-pillow.org) (Python).
 
 ## Links
 
-- 🌐 Website — https://tasknull.vercel.app
+- 🌐 Website — https://tasknull.art
 - 𝕏 / Twitter — https://x.com/TaskNull
 - ⛓ Base — https://base.org
 
