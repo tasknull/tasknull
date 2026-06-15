@@ -50,7 +50,7 @@
       <table>
         <tr><th>Command</th><th>What it does</th></tr>
         <tr><td><code>tasknull init</code></td><td>Create your local identity (secret + Ed25519 keys).</td></tr>
-        <tr><td><code>tasknull whoami</code></td><td>Print your public identity commitment.</td></tr>
+        <tr><td><code>tasknull whoami</code></td><td>Print your public Solana address.</td></tr>
         <tr><td><code>tasknull commit</code></td><td>Publish a hiding commitment for a solution.</td></tr>
         <tr><td><code>tasknull prove</code></td><td>Emit a signed proof + one-way nullifier.</td></tr>
         <tr><td><code>tasknull verify</code></td><td>Verify a proof JSON.</td></tr>
@@ -64,7 +64,7 @@
 <span class="c">✓ identity created  → ~/.tasknull/identity.json</span></code></pre>
 
       <h2>tasknull whoami</h2>
-      <p>Prints your shareable identity commitment.</p>
+      <p>Prints your shareable Solana address.</p>
       <pre><code><span class="p">$</span> tasknull whoami</code></pre>
 
       <h2>tasknull commit</h2>
@@ -97,7 +97,7 @@
       <h2>tasknull claim</h2>
       <p>Verifies the proof, then burns the nullifier by recording it locally. A second claim of the same work fails.</p>
       <pre><code><span class="p">$</span> tasknull claim proof.json</code></pre>
-      <div class="note">Settlement is local in v0.1 — the nullifier is written to <code>~/.tasknull/spent.json</code>. On-chain settlement on Solana ships with the <code>$TNULL</code> contract.</div>
+      <div class="note">Settlement is local in v0.1 — the nullifier is written to <code>~/.tasknull/spent.json</code>. On-chain settlement on Solana ships with the <code>$TNULL</code> program.</div>
 
       <h2>tasknull spent</h2>
       <p>Lists the nullifiers burned on this machine.</p>

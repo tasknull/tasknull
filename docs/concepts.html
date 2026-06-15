@@ -52,7 +52,7 @@
         <li>a 32-byte random <strong>secret</strong> — the root of your nullifiers; it never leaves your machine and is never put on-chain;</li>
         <li>an <strong>Ed25519 keypair</strong> used to sign completion proofs.</li>
       </ul>
-      <p>Your public <strong>identity commitment</strong> is <code>SHA256(publicKey)</code> — safe to share, and it reveals nothing about your secret.</p>
+      <p>Your public <strong>Solana address</strong> is a base58-encoded Ed25519 public key — safe to share, and it reveals nothing about your secret.</p>
 
       <h2>Commitment</h2>
       <p>A commitment binds a solution to a bounty without revealing the solution:</p>
@@ -76,7 +76,7 @@
   <span class="s">"commitment"</span>: "…",
   <span class="s">"nullifier"</span>: "…",
   <span class="s">"payout"</span>: "7xKX…",
-  <span class="s">"publicKey"</span>: "…",
+  <span class="s">"publicKey"</span>: "BrvFkjhE…FTCkBJ",
   <span class="s">"signature"</span>: "…"
 }</code></pre>
       <p>Verification re-checks the signature over the exact payload, so any tampering — changing the payout, the bounty, or the nullifier — invalidates the proof.</p>
