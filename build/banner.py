@@ -68,7 +68,7 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="
   <tspan fill="#f97316">task</tspan><tspan fill="#e8eaf0">null</tspan>
 </text>
 <text x="433" y="212" font-size="26" font-weight="500" fill="#aeb4c4">Prove you finished the work. Hide who you are.</text>
-<text x="433" y="250" font-size="19" fill="#6b7287" font-family="'SFMono-Regular',Consolas,monospace">nullifier-backed proof-of-completion &#183; settled on Base</text>
+<text x="433" y="250" font-size="19" fill="#6b7287" font-family="'SFMono-Regular',Consolas,monospace">nullifier-backed proof-of-completion &#183; settled on Solana</text>
 </svg>
 '''
 

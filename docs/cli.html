@@ -82,13 +82,13 @@
         <tr><th>Option</th><th>Required</th><th>Description</th></tr>
         <tr><td><code>--bounty &lt;id&gt;</code></td><td>yes</td><td>Bounty identifier.</td></tr>
         <tr><td><code>--file &lt;path&gt;</code></td><td>yes</td><td>Path to your solution.</td></tr>
-        <tr><td><code>--to &lt;0x…&gt;</code></td><td>yes</td><td>Fresh payout address (0x + 40 hex).</td></tr>
+        <tr><td><code>--to &lt;SOL_ADDRESS&gt;</code></td><td>yes</td><td>Fresh payout address (Solana base58, 32-44 chars).</td></tr>
         <tr><td><code>--out &lt;path&gt;</code></td><td>no</td><td>Write the proof JSON to a file (default: stdout).</td></tr>
         <tr><td><code>--scope &lt;text&gt;</code></td><td>no</td><td>Optional scope label, included in the signed payload.</td></tr>
         <tr><td><code>--reward &lt;text&gt;</code></td><td>no</td><td>Optional reward label, included in the signed payload.</td></tr>
       </table>
       <pre><code><span class="p">$</span> tasknull prove <span class="s">--bounty</span> zk-audit-114 <span class="s">--file</span> solution.txt \
-    <span class="s">--to</span> 0x1111111111111111111111111111111111111111 <span class="s">--out</span> proof.json</code></pre>
+    <span class="s">--to</span> 7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU <span class="s">--out</span> proof.json</code></pre>
 
       <h2>tasknull verify</h2>
       <p>Checks a proof and exits <code>0</code> if valid, <code>1</code> otherwise. Runs four checks: bounty membership / commitment, signature integrity, nullifier unspent, and scope &amp; reward match.</p>
@@ -97,7 +97,7 @@
       <h2>tasknull claim</h2>
       <p>Verifies the proof, then burns the nullifier by recording it locally. A second claim of the same work fails.</p>
       <pre><code><span class="p">$</span> tasknull claim proof.json</code></pre>
-      <div class="note">Settlement is local in v0.1 — the nullifier is written to <code>~/.tasknull/spent.json</code>. On-chain settlement on Base ships with the <code>$TNULL</code> contract.</div>
+      <div class="note">Settlement is local in v0.1 — the nullifier is written to <code>~/.tasknull/spent.json</code>. On-chain settlement on Solana ships with the <code>$TNULL</code> contract.</div>
 
       <h2>tasknull spent</h2>
       <p>Lists the nullifiers burned on this machine.</p>
@@ -115,7 +115,7 @@
 
 <span class="c"># 3. prove completion, payable to a fresh address</span>
 <span class="p">$</span> tasknull prove <span class="s">--bounty</span> zk-audit-114 <span class="s">--file</span> solution.txt \
-    <span class="s">--to</span> 0x1111111111111111111111111111111111111111 <span class="s">--out</span> proof.json
+    <span class="s">--to</span> 7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU <span class="s">--out</span> proof.json
 
 <span class="c"># 4. anyone can verify it</span>
 <span class="p">$</span> tasknull verify proof.json        <span class="c"># → ✓ VALID</span>

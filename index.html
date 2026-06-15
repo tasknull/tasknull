@@ -5,13 +5,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Tasknull — Anonymous proof-of-completion for on-chain bounties</title>
-<meta name="description" content="Prove you finished the work. Hide who you are. Tasknull settles bounty rewards on Base with nullifier-backed, double-claim-proof completion proofs." />
+<meta name="description" content="Prove you finished the work. Hide who you are. Tasknull settles bounty rewards on Solana with nullifier-backed, double-claim-proof completion proofs." />
 <meta name="theme-color" content="#07080c" />
 <link rel="icon" type="image/png" href="assets/favicon.png" />
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Tasknull — Proof you finished. Privacy on who you are." />
-<meta property="og:description" content="Nullifier-backed proof-of-completion for on-chain bounties, settled on Base. A CLI to claim, a verifier to audit." />
+<meta property="og:description" content="Nullifier-backed proof-of-completion for on-chain bounties, settled on Solana. A CLI to claim, a verifier to audit." />
 <meta property="og:url" content="https://taksnull.xyz/" />
 <meta property="og:image" content="https://taksnull.xyz/assets/og-image.png" />
 <meta property="og:image:width" content="1200" />
@@ -315,7 +315,7 @@ html.js .reveal.in{opacity:1;transform:none}
 <section class="hero">
   <div class="wrap hero-grid">
     <div class="reveal in">
-      <span class="kick">LSAG-free · <b>nullifier-backed proofs</b> · settled on Base</span>
+      <span class="kick">LSAG-free · <b>nullifier-backed proofs</b> · settled on Solana</span>
       <h1 class="hero-h">Prove you finished the work.<br/>Hide <span class="null">who you are.</span></h1>
       <p class="hero-sub">Tasknull turns a completed bounty into a cryptographic receipt. Reviewers confirm the work is real and the claim can't be spent twice — without ever learning which wallet did it.</p>
       <div class="hero-cta">
@@ -384,9 +384,9 @@ html.js .reveal.in{opacity:1;transform:none}
       </div>
       <div class="step">
         <div class="num"><b>03</b> / settle</div>
-        <h3>Get paid on Base</h3>
+        <h3>Get paid on Solana</h3>
         <p>Anyone can verify the proof and nullifier. Once it checks out, the reward releases to a fresh address you control.</p>
-        <code>$ tasknull claim --to 0xYOUR…</code>
+        <code>$ tasknull claim --to 7xKX…osgAsU</code>
       </div>
     </div>
   </div>
@@ -428,25 +428,25 @@ html.js .reveal.in{opacity:1;transform:none}
     <div class="sec-head reveal">
       <span class="eyebrow"><span class="slash">/</span> the token</span>
       <h2><em>$TNULL</em> — the bounty reward layer.</h2>
-      <p>Live on Base. Reward pools are funded in $TNULL and pay out to the proof, never to a doxxable signer — the privacy model holds by construction.</p>
+      <p>Live on Solana. Reward pools are funded in $TNULL and pay out to the proof, never to a doxxable signer — the privacy model holds by construction.</p>
     </div>
     <div class="token-grid">
       <div class="token-card reveal">
-        <div class="mono muted" style="font-size:12px;letter-spacing:.12em;text-transform:uppercase">Contract · Base</div>
+        <div class="mono muted" style="font-size:12px;letter-spacing:.12em;text-transform:uppercase">Mint · Solana</div>
         <div class="contract">
-          <span class="addr" id="addr">0x0000000000000000000000000000000000000000</span>
+          <span class="addr" id="addr">TBA — $TNULL mint at launch</span>
           <button class="copy" id="copyAddr">copy</button>
         </div>
-        <div class="mono muted" style="font-size:12.5px;margin-top:14px;line-height:1.6">Paste your deployed $TNULL address here before launch. The links below are wired to read it automatically.</div>
+        <div class="mono muted" style="font-size:12.5px;margin-top:14px;line-height:1.6">Paste your $TNULL mint address here before launch. The links below are wired to read it automatically.</div>
         <div class="tk-links">
           <a class="btn" href="#" target="_blank" rel="noopener">Dexscreener</a>
-          <a class="btn" href="#" target="_blank" rel="noopener">Basescan</a>
+          <a class="btn" href="#" target="_blank" rel="noopener">Solscan</a>
           <a class="btn solid" href="#registry">Fund a bounty</a>
         </div>
       </div>
       <div class="token-card reveal alloc">
         <div class="row"><div class="lab"><b>Bounty reward pool</b><span>60%</span></div><div class="bar"><div class="fill" style="width:60%"></div></div></div>
-        <div class="row"><div class="lab"><b>Liquidity · Base</b><span>20%</span></div><div class="bar"><div class="fill" style="width:20%"></div></div></div>
+        <div class="row"><div class="lab"><b>Liquidity · Solana</b><span>20%</span></div><div class="bar"><div class="fill" style="width:20%"></div></div></div>
         <div class="row"><div class="lab"><b>Protocol &amp; CLI dev</b><span>12%</span></div><div class="bar"><div class="fill" style="width:12%"></div></div></div>
         <div class="row"><div class="lab"><b>Verifier infra</b><span>8%</span></div><div class="bar"><div class="fill" style="width:8%"></div></div></div>
       </div>
@@ -464,10 +464,10 @@ html.js .reveal.in{opacity:1;transform:none}
     </div>
     <div class="reg reveal">
       <div class="reg-row head"><span>bounty</span><span class="col-hide">scope</span><span>reward</span><span>status</span></div>
-      <div class="reg-row"><div><div class="name">ZK circuit audit · groth16 verifier</div><div class="scope">scope: constraint soundness</div></div><span class="mono muted col-hide">audit</span><span class="rew">4.0 ETH</span><span><span class="tag open">open</span></span></div>
+      <div class="reg-row"><div><div class="name">ZK circuit audit · groth16 verifier</div><div class="scope">scope: constraint soundness</div></div><span class="mono muted col-hide">audit</span><span class="rew">4.0 SOL</span><span><span class="tag open">open</span></span></div>
       <div class="reg-row"><div><div class="name">Bridge replay disclosure</div><div class="scope">scope: nullifier reuse path</div></div><span class="mono muted col-hide">security</span><span class="rew">120k $TNULL</span><span><span class="tag open">open</span></span></div>
       <div class="reg-row"><div><div class="name">CLI fuzz harness</div><div class="scope">scope: commit-reveal edge cases</div></div><span class="mono muted col-hide">tooling</span><span class="rew">35k $TNULL</span><span><span class="tag claimed">claimed</span></span></div>
-      <div class="reg-row"><div><div class="name">Indexer for spent nullifiers</div><div class="scope">scope: Base event stream</div></div><span class="mono muted col-hide">infra</span><span class="rew">1.5 ETH</span><span><span class="tag open">open</span></span></div>
+      <div class="reg-row"><div><div class="name">Indexer for spent nullifiers</div><div class="scope">scope: Solana event stream</div></div><span class="mono muted col-hide">infra</span><span class="rew">1.5 SOL</span><span><span class="tag open">open</span></span></div>
     </div>
   </div>
 </section>
@@ -484,7 +484,7 @@ html.js .reveal.in{opacity:1;transform:none}
       <div>
         <div class="mono muted" style="font-size:12px;letter-spacing:.12em;text-transform:uppercase">claim url / raw proof</div>
         <div class="vf-input">
-          <input id="vfInput" placeholder="https://base…/claim/0x9f3a…" spellcheck="false" />
+          <input id="vfInput" placeholder="https://solscan…/claim/0x9f3a…" spellcheck="false" />
           <button class="btn solid" id="vfRun">Verify</button>
         </div>
         <div class="mono muted" style="font-size:12.5px;margin-top:14px;line-height:1.6">Runs against <span style="color:var(--amber-soft)">POST /api/verify</span>. Deterministic — same input, same answer, every time.</div>
@@ -508,7 +508,7 @@ html.js .reveal.in{opacity:1;transform:none}
           <img class="brand-logo" src="assets/logo-64.png" width="24" height="24" style="width:24px;height:24px" alt="" aria-hidden="true" />
           <span class="wordmark"><span class="wm-task">task</span><span class="wm-null">null</span></span>
         </a>
-        <p>Cryptographic proof of completed work, settled on Base — with the claimant's identity hidden by construction. A CLI to prove, a verifier to audit.</p>
+        <p>Cryptographic proof of completed work, settled on Solana — with the claimant's identity hidden by construction. A CLI to prove, a verifier to audit.</p>
         <div class="socials">
           <a href="https://x.com/TaskNull" aria-label="X / Twitter" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.75l-5.29-6.91L4.4 22H1.14l8.02-9.17L1.5 2h6.92l4.78 6.32L18.244 2Zm-1.18 18h1.83L7.02 3.9H5.06L17.064 20Z"/></svg></a>
           <a href="https://github.com/tasknull/tasknull" aria-label="GitHub" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49v-1.7c-2.78.62-3.37-1.22-3.37-1.22-.46-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.36 9.36 0 0 1 12 6.84c.85 0 1.71.12 2.51.34 1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9v2.81c0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg></a>
@@ -526,14 +526,14 @@ html.js .reveal.in{opacity:1;transform:none}
         <h4>$TNULL</h4>
         <a href="#token">Token</a>
         <a href="#" target="_blank" rel="noopener">Dexscreener</a>
-        <a href="#" target="_blank" rel="noopener">Basescan</a>
+        <a href="#" target="_blank" rel="noopener">Solscan</a>
         <a href="#registry">Fund a bounty</a>
         <a href="docs/index.html">Docs</a>
       </div>
     </div>
     <div class="foot-bot">
       <span>© 2026 tasknull · proof of completion, not identity</span>
-      <span><a class="foot-legal" href="terms.html">Terms</a> · <a class="foot-legal" href="privacy.html">Privacy</a> · built on commit-reveal + nullifiers · Base L2</span>
+      <span><a class="foot-legal" href="terms.html">Terms</a> · <a class="foot-legal" href="privacy.html">Privacy</a> · built on commit-reveal + nullifiers · Solana</span>
     </div>
     <p class="foot-disclaimer"><strong>Disclaimer.</strong> $TNULL is an experimental utility token and Tasknull is provided “as is”, without warranties of any kind. Nothing on this site is financial, legal, or investment advice. Digital assets are highly volatile and you may lose the entire value of your funds. Always verify the official contract address before transacting, and use at your own risk.</p>
   </div>
@@ -549,11 +549,11 @@ html.js .reveal.in{opacity:1;transform:none}
     {c:'ok', t:'  ✓ commitment matched acceptance criteria'},
     {c:'hash',t:'  nullifier  0x9f3a7c…e0c1'},
     {c:'hash',t:'  ring root  0x41b2d9…77af'},
-    {c:'pr', t:'$ tasknull claim --to 0x_fresh'},
+    {c:'pr', t:'$ tasknull claim --to 7xKX…gAsU'},
     {c:'ok', t:'  ✓ signature valid'},
     {c:'ok', t:'  ✓ nullifier unspent — reward unlocked'},
-    {c:'burn',t:'  ⊘ nullifier burned · claim settled on Base'},
-    {c:'dim',t:'  payout → 0x_fresh (no link to signer)'}
+    {c:'burn',t:'  ⊘ nullifier burned · claim settled on Solana'},
+    {c:'dim',t:'  payout → 7xKX…gAsU (no link to signer)'}
   ];
   var body = document.getElementById('termBody');
   function typeLines(i){
@@ -575,7 +575,7 @@ html.js .reveal.in{opacity:1;transform:none}
   /* ---- marquee ---- */
   var track=document.getElementById('track');
   if(track){
-    var unit='<span>tasknull <b>/</b> prove the work <b>/</b> hide the wallet <b>/</b> no double-claims <b>/</b> settled on Base <b>/</b> </span>';
+    var unit='<span>tasknull <b>/</b> prove the work <b>/</b> hide the wallet <b>/</b> no double-claims <b>/</b> settled on Solana <b>/</b> </span>';
     track.innerHTML=(unit+unit);
   }
 

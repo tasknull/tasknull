@@ -39,7 +39,7 @@ def fit(text, path, start):
 
 word_f = font(SEGB, 96)
 tag = "Prove you finished the work. Hide who you are."
-sub = "Nullifier-backed proof-of-completion   ·   settled on Base"
+sub = "Nullifier-backed proof-of-completion   ·   settled on Solana"
 tag_f, sub_f = fit(tag, SEG, 34), fit(sub, SEG, 26)
 
 ty = 208
