@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 486" width="820" height="486" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="14">
+  <rect x="0" y="0" width="820" height="486" rx="12" fill="#0a0c12" stroke="#1b2030"/>
+  <rect x="0" y="0" width="820" height="40" rx="12" fill="#10131c"/>
+  <rect x="0" y="28" width="820" height="12" fill="#10131c"/>
+  <line x1="0" y1="40" x2="820" y2="40" stroke="#1b2030"/>
+  <circle cx="22" cy="20" r="6" fill="#e0676b" opacity="0.85"/>
+  <circle cx="42" cy="20" r="6" fill="#f2b441" opacity="0.85"/>
+  <circle cx="62" cy="20" r="6" fill="#63cad6" opacity="0.85"/>
+  <text x="410" y="25" text-anchor="middle" fill="#878ea1" font-size="13">~/bounty — tasknull</text>
+    <text x="24" y="70" opacity="0"><tspan fill="#f2b441">$ </tspan><tspan fill="#e8eaf0">tasknull init</tspan><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.020;0.026;0.93;1" dur="13.0s" repeatCount="indefinite"/></text>
+  <text x="24" y="92" fill="#63cad6" opacity="0">✓ identity created  → ~/.tasknull/identity.json<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.061;0.067;0.93;1" dur="13.0s" repeatCount="indefinite"/></text>
+  <text x="24" y="136" opacity="0"><tspan fill="#f2b441">$ </tspan><tspan fill="#e8eaf0">tasknull prove --bounty zk-audit-114 --file solution.txt \</tspan><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.143;0.149;0.93;1" dur="13.0s" repeatCount="indefinite"/></text>
+  <text x="24" y="158" fill="#878ea1" opacity="0">        --to 0x1111…1111 --out proof.json<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.184;0.190;0.93;1" dur="13.0s" repeatCount="indefinite"/></text>
+  <text x="24" y="180" fill="#63cad6" opacity="0">✓ proof written  → proof.json<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.226;0.232;0.93;1" dur="13.0s" repeatCount="indefinite"/></text>
+  <text x="24" y="202" fill="#f6c869" opacity="0">  nullifier  b2cff4743741e95bf57296e7…e0c1<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.267;0.273;0.93;1" dur="13.0s" repeatCount="indefinite"/></text>
+  <text x="24" y="246" opacity="0"><tspan fill="#f2b441">$ </tspan><tspan fill="#e8eaf0">tasknull verify proof.json</tspan><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.349;0.355;0.93;1" dur="13.0s" repeatCount="indefinite"/></text>
+  <text x="24" y="268" fill="#63cad6" opacity="0">  ✓ signature integrity<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.390;0.396;0.93;1" dur="13.0s" repeatCount="indefinite"/></text>
+  <text x="24" y="290" fill="#63cad6" opacity="0">  ✓ nullifier unspent<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.431;0.437;0.93;1" dur="13.0s" repeatCount="indefinite"/></text>
+  <text x="24" y="312" fill="#63cad6" font-weight="700" opacity="0">  ✓ VALID — proof checks out<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.472;0.478;0.93;1" dur="13.0s" repeatCount="indefinite"/></text>
+  <text x="24" y="356" opacity="0"><tspan fill="#f2b441">$ </tspan><tspan fill="#e8eaf0">tasknull claim proof.json</tspan><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.554;0.560;0.93;1" dur="13.0s" repeatCount="indefinite"/></text>
+  <text x="24" y="378" fill="#63cad6" opacity="0">✓ settled — nullifier burned, reward released<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.596;0.602;0.93;1" dur="13.0s" repeatCount="indefinite"/></text>
+  <text x="24" y="422" opacity="0"><tspan fill="#f2b441">$ </tspan><tspan fill="#e8eaf0">tasknull claim proof.json</tspan><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.678;0.684;0.93;1" dur="13.0s" repeatCount="indefinite"/></text>
+  <text x="24" y="444" fill="#e0676b" opacity="0">✗ cannot settle — nullifier already spent<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.719;0.725;0.93;1" dur="13.0s" repeatCount="indefinite"/></text>
+  <rect x="24" y="448" width="9" height="16" fill="#f2b441">
+    <animate attributeName="opacity" values="1;0;1" keyTimes="0;0.5;1" dur="1.05s" repeatCount="indefinite"/>
+  </rect>
+</svg>
