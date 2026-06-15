@@ -7,7 +7,7 @@ It is written in plain **Node.js (≥ 18)** with **zero dependencies** (only the
 `crypto` module): Ed25519 signatures, SHA-256 commitments, and one-way nullifiers.
 
 > **Status — v0.1 reference implementation.** The cryptography is real and works locally.
-> On-chain settlement on Base is **simulated locally** (the nullifier is recorded in a local
+> On-chain settlement on Solana is **simulated locally** (the nullifier is recorded in a local
 > registry) until the `$TNULL` contract is live. Use it to learn, test, and integrate against.
 
 ## Install
@@ -34,7 +34,7 @@ echo "my fix for the reentrancy bug" > solution.txt
 
 # 3. Generate a signed completion proof, payable to a fresh address you control
 tasknull prove --bounty zk-audit-114 --file solution.txt \
-  --to 0x1111111111111111111111111111111111111111 --out proof.json
+  --to 7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU --out proof.json
 
 # 4. Anyone can verify it — no trust in you required
 tasknull verify proof.json
@@ -53,7 +53,7 @@ tasknull claim proof.json
 | `tasknull init` | Create your local identity (`secret` + Ed25519 keys). `--force` overwrites. |
 | `tasknull whoami` | Print your public **identity commitment** (safe to share). |
 | `tasknull commit --bounty <id> --file <path>` | Publish a hiding **commitment** binding a solution to a bounty. |
-| `tasknull prove --bounty <id> --file <path> --to <0x…>` | Emit a signed proof JSON with a one-way **nullifier**. `--out <file>`, `--scope`, `--reward` optional. |
+| `tasknull prove --bounty <id> --file <path> --to <SOL_ADDR>` | Emit a signed proof JSON with a one-way **nullifier**. `--out <file>`, `--scope`, `--reward` optional. |
 | `tasknull verify <proof.json>` | Check signature, structure, nullifier freshness, scope. Exit `0` = valid. |
 | `tasknull claim <proof.json>` | Verify, then **burn** the nullifier (local settlement). |
 | `tasknull spent` | List nullifiers spent on this machine. |

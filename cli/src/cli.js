@@ -6,7 +6,7 @@ const C = require('./crypto');
 const store = require('./store');
 const pkg = require('../package.json');
 
-const ADDR_RE = /^0x[0-9a-fA-F]{40}$/;
+const ADDR_RE = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/; // Solana base58 address
 const HEX64 = /^[0-9a-f]{64}$/;
 
 // ---- tiny colour helpers (skip codes when not a TTY, e.g. piped output) ----
@@ -41,7 +41,7 @@ ${amber('COMMANDS')}
   prove                Generate a signed completion proof
     --bounty <id>        bounty identifier            (required)
     --file <path>        path to your solution        (required)
-    --to <0x...>         fresh payout address         (required)
+    --to <SOL_ADDR>      fresh payout address         (required)
     --scope <text>       optional scope label
     --reward <text>      optional reward label
     --out <path>         write proof JSON to a file (default: stdout)
@@ -56,12 +56,12 @@ ${amber('OPTIONS')}
 ${amber('EXAMPLE')}
   tasknull init
   echo "my fix" > solution.txt
-  tasknull prove --bounty zk-audit-114 --file solution.txt --to 0x${'0'.repeat(40).slice(0,40)} --out proof.json
+  tasknull prove --bounty zk-audit-114 --file solution.txt --to 7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU --out proof.json
   tasknull verify proof.json
   tasknull claim proof.json
 
 ${dim('State is stored in ~/.tasknull (override with TASKNULL_HOME).')}
-${dim('Settlement is local in this release; on-chain settlement on Base ships with the $TNULL contract.')}`;
+${dim('Settlement is local in this release; on-chain settlement on Solana ships with the $TNULL program.')}`;
 
 function parseArgs(argv) {
   const out = { _: [] };
@@ -135,8 +135,8 @@ function buildProof(id, bounty, solutionHash, payout, opts) {
 function cmdProve(args) {
   const bounty = need(args.bounty, '--bounty <id> required');
   const file = need(args.file, '--file <path> required');
-  const payout = need(args.to, '--to <0xaddress> required');
-  if (!ADDR_RE.test(payout)) die('invalid --to address (expected 0x followed by 40 hex chars)');
+  const payout = need(args.to, '--to <SOL_ADDRESS> required');
+  if (!ADDR_RE.test(payout)) die('invalid --to address (expected a Solana base58 address, 32-44 chars)');
   if (!fs.existsSync(file)) die('file not found: ' + file);
   const id = store.loadIdentity();
   const proof = buildProof(id, bounty, C.hashFile(file), payout, { scope: args.scope, reward: args.reward });
@@ -201,7 +201,7 @@ function cmdClaim(args) {
   }
   store.markSpent(proof.nullifier, { bounty: proof.bounty, payout: proof.payout, at: new Date().toISOString() });
   console.log(ok('\n✓ settled') + ' — nullifier burned, reward released to ' + amber(proof.payout));
-  console.log(dim('  local settlement — on-chain settlement on Base ships with the $TNULL contract.'));
+  console.log(dim('  local settlement — on-chain settlement on Solana ships with the $TNULL program.'));
 }
 
 function cmdSpent() {
