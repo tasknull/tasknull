@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FAQ — tasknull docs</title>
+<meta name="description" content="Frequently asked questions about tasknull."/>
+<meta name="theme-color" content="#07080c"/>
+<link rel="icon" type="image/png" href="../assets/favicon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="docs.css"/>
+</head>
+<body>
+<input type="checkbox" id="navtoggle">
+<header class="dtop">
+  <label for="navtoggle" class="burger" aria-label="Toggle menu">≡</label>
+  <a class="dbrand" href="../index.html"><img src="../assets/logo-64.png" width="22" height="22" alt=""/><span><span class="t">task</span><span class="n">null</span> <span class="docs">docs</span></span></a>
+  <div class="dtop-right">
+    <a href="../index.html">Home</a>
+    <a href="https://github.com/tasknull/tasknull" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+<div class="dlayout">
+  <aside class="side">
+    <nav>
+      <div class="sgroup"><div class="stitle">Getting started</div>
+        <a href="index.html">Introduction</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="concepts.html">Core concepts</a>
+      </div>
+      <div class="sgroup"><div class="stitle">Using the CLI</div>
+        <a href="installation.html">Installation</a>
+        <a href="cli.html">CLI reference</a>
+      </div>
+      <div class="sgroup"><div class="stitle">Protocol</div>
+        <a href="token.html">$TNULL token</a>
+        <a href="faq.html" class="active">FAQ</a>
+      </div>
+    </nav>
+  </aside>
+  <main class="dcontent">
+    <article>
+      <span class="eyebrow">/ faq</span>
+      <h1>Frequently asked questions</h1>
+
+      <h3>Is tasknull live on-chain?</h3>
+      <p>Not yet. The CLI is a working v0.1 reference implementation: the cryptography runs locally today, but on-chain settlement on Base ships with the <code>$TNULL</code> contract (address <strong>TBA</strong>). See <a href="token.html">$TNULL token</a>.</p>
+
+      <h3>Does the CLI send anything over the network?</h3>
+      <p>No. Everything runs locally. Your secret and keys live in <code>~/.tasknull</code> and never leave your machine.</p>
+
+      <h3>What stops someone from claiming the same bounty twice?</h3>
+      <p>The nullifier. It's deterministic per <code>(secret, bounty)</code>, so a repeat claim produces the same nullifier and collides with the first. See <a href="concepts.html">Core concepts</a>.</p>
+
+      <h3>Can a verifier figure out who I am?</h3>
+      <p>The proof is signed with an identity key and pays out to a fresh address that has no on-chain link to it. The v0.1 CLI provides nullifier-based double-claim prevention and signature integrity; <strong>full zero-knowledge unlinkability</strong> (hiding which registered member signed) arrives with the ZK circuit. Manage your operational privacy accordingly.</p>
+
+      <h3>What happens if I lose my <code>identity.json</code>?</h3>
+      <p>There is no recovery. Your secret is the root of your nullifiers and signatures — back up the <code>~/.tasknull</code> folder and keep it private.</p>
+
+      <h3>Which networks are supported?</h3>
+      <p>tasknull targets <strong>Base</strong> (L2) for settlement and rewards.</p>
+
+      <h3>Is it open source?</h3>
+      <p>Yes — the CLI is MIT licensed. Source and issues live on <a href="https://github.com/tasknull/tasknull" target="_blank" rel="noopener">GitHub</a>.</p>
+
+      <h3>How do I report a bug or ask a question?</h3>
+      <p>Open an issue on <a href="https://github.com/tasknull/tasknull" target="_blank" rel="noopener">GitHub</a>, or reach us on <a href="https://x.com/TaskNull" target="_blank" rel="noopener">X (@TaskNull)</a>.</p>
+
+      <nav class="prevnext">
+        <a href="token.html"><span class="k">← Prev</span><span class="t">$TNULL token</span></a>
+        <a class="next" href="../index.html"><span class="k">Next →</span><span class="t">Back to home</span></a>
+      </nav>
+      <footer class="dfoot">© 2026 tasknull · <a href="../index.html">home</a></footer>
+    </article>
+  </main>
+</div>
+</body>
+</html>

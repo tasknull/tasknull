@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CLI reference — tasknull docs</title>
+<meta name="description" content="Every tasknull CLI command, its options, and a full end-to-end walkthrough."/>
+<meta name="theme-color" content="#07080c"/>
+<link rel="icon" type="image/png" href="../assets/favicon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="docs.css"/>
+</head>
+<body>
+<input type="checkbox" id="navtoggle">
+<header class="dtop">
+  <label for="navtoggle" class="burger" aria-label="Toggle menu">≡</label>
+  <a class="dbrand" href="../index.html"><img src="../assets/logo-64.png" width="22" height="22" alt=""/><span><span class="t">task</span><span class="n">null</span> <span class="docs">docs</span></span></a>
+  <div class="dtop-right">
+    <a href="../index.html">Home</a>
+    <a href="https://github.com/tasknull/tasknull" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+<div class="dlayout">
+  <aside class="side">
+    <nav>
+      <div class="sgroup"><div class="stitle">Getting started</div>
+        <a href="index.html">Introduction</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="concepts.html">Core concepts</a>
+      </div>
+      <div class="sgroup"><div class="stitle">Using the CLI</div>
+        <a href="installation.html">Installation</a>
+        <a href="cli.html" class="active">CLI reference</a>
+      </div>
+      <div class="sgroup"><div class="stitle">Protocol</div>
+        <a href="token.html">$TNULL token</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+    </nav>
+  </aside>
+  <main class="dcontent">
+    <article>
+      <span class="eyebrow">/ cli reference</span>
+      <h1>CLI reference</h1>
+      <p class="lead">Every command, its options, and a complete walkthrough you can copy-paste. Run <code>tasknull --help</code> any time.</p>
+
+      <h2>Commands at a glance</h2>
+      <table>
+        <tr><th>Command</th><th>What it does</th></tr>
+        <tr><td><code>tasknull init</code></td><td>Create your local identity (secret + Ed25519 keys).</td></tr>
+        <tr><td><code>tasknull whoami</code></td><td>Print your public identity commitment.</td></tr>
+        <tr><td><code>tasknull commit</code></td><td>Publish a hiding commitment for a solution.</td></tr>
+        <tr><td><code>tasknull prove</code></td><td>Emit a signed proof + one-way nullifier.</td></tr>
+        <tr><td><code>tasknull verify</code></td><td>Verify a proof JSON.</td></tr>
+        <tr><td><code>tasknull claim</code></td><td>Settle a proof — burns the nullifier.</td></tr>
+        <tr><td><code>tasknull spent</code></td><td>List nullifiers spent on this machine.</td></tr>
+      </table>
+
+      <h2>tasknull init</h2>
+      <p>Creates your identity in <code>~/.tasknull/identity.json</code>. Use <code>--force</code> to overwrite an existing one.</p>
+      <pre><code><span class="p">$</span> tasknull init
+<span class="c">✓ identity created  → ~/.tasknull/identity.json</span></code></pre>
+
+      <h2>tasknull whoami</h2>
+      <p>Prints your shareable identity commitment.</p>
+      <pre><code><span class="p">$</span> tasknull whoami</code></pre>
+
+      <h2>tasknull commit</h2>
+      <p>Binds a solution file to a bounty and prints the commitment.</p>
+      <table>
+        <tr><th>Option</th><th>Required</th><th>Description</th></tr>
+        <tr><td><code>--bounty &lt;id&gt;</code></td><td>yes</td><td>Bounty identifier.</td></tr>
+        <tr><td><code>--file &lt;path&gt;</code></td><td>yes</td><td>Path to your solution.</td></tr>
+      </table>
+      <pre><code><span class="p">$</span> tasknull commit <span class="s">--bounty</span> zk-audit-114 <span class="s">--file</span> solution.txt</code></pre>
+
+      <h2>tasknull prove</h2>
+      <p>Generates a signed completion proof with a one-way nullifier.</p>
+      <table>
+        <tr><th>Option</th><th>Required</th><th>Description</th></tr>
+        <tr><td><code>--bounty &lt;id&gt;</code></td><td>yes</td><td>Bounty identifier.</td></tr>
+        <tr><td><code>--file &lt;path&gt;</code></td><td>yes</td><td>Path to your solution.</td></tr>
+        <tr><td><code>--to &lt;0x…&gt;</code></td><td>yes</td><td>Fresh payout address (0x + 40 hex).</td></tr>
+        <tr><td><code>--out &lt;path&gt;</code></td><td>no</td><td>Write the proof JSON to a file (default: stdout).</td></tr>
+        <tr><td><code>--scope &lt;text&gt;</code></td><td>no</td><td>Optional scope label, included in the signed payload.</td></tr>
+        <tr><td><code>--reward &lt;text&gt;</code></td><td>no</td><td>Optional reward label, included in the signed payload.</td></tr>
+      </table>
+      <pre><code><span class="p">$</span> tasknull prove <span class="s">--bounty</span> zk-audit-114 <span class="s">--file</span> solution.txt \
+    <span class="s">--to</span> 0x1111111111111111111111111111111111111111 <span class="s">--out</span> proof.json</code></pre>
+
+      <h2>tasknull verify</h2>
+      <p>Checks a proof and exits <code>0</code> if valid, <code>1</code> otherwise. Runs four checks: bounty membership / commitment, signature integrity, nullifier unspent, and scope &amp; reward match.</p>
+      <pre><code><span class="p">$</span> tasknull verify proof.json</code></pre>
+
+      <h2>tasknull claim</h2>
+      <p>Verifies the proof, then burns the nullifier by recording it locally. A second claim of the same work fails.</p>
+      <pre><code><span class="p">$</span> tasknull claim proof.json</code></pre>
+      <div class="note">Settlement is local in v0.1 — the nullifier is written to <code>~/.tasknull/spent.json</code>. On-chain settlement on Base ships with the <code>$TNULL</code> contract.</div>
+
+      <h2>tasknull spent</h2>
+      <p>Lists the nullifiers burned on this machine.</p>
+      <pre><code><span class="p">$</span> tasknull spent</code></pre>
+
+      <hr/>
+
+      <h2>Full walkthrough</h2>
+      <p>Copy-paste this end to end to see the whole lifecycle, including double-claim rejection.</p>
+      <pre><code><span class="c"># 1. create your identity</span>
+<span class="p">$</span> tasknull init
+
+<span class="c"># 2. write a solution (anything — code, a writeup, a patch)</span>
+<span class="p">$</span> echo "my fix for the reentrancy bug" &gt; solution.txt
+
+<span class="c"># 3. prove completion, payable to a fresh address</span>
+<span class="p">$</span> tasknull prove <span class="s">--bounty</span> zk-audit-114 <span class="s">--file</span> solution.txt \
+    <span class="s">--to</span> 0x1111111111111111111111111111111111111111 <span class="s">--out</span> proof.json
+
+<span class="c"># 4. anyone can verify it</span>
+<span class="p">$</span> tasknull verify proof.json        <span class="c"># → ✓ VALID</span>
+
+<span class="c"># 5. settle — burns the nullifier</span>
+<span class="p">$</span> tasknull claim proof.json         <span class="c"># → ✓ settled</span>
+
+<span class="c"># 6. try to claim the same work again</span>
+<span class="p">$</span> tasknull claim proof.json         <span class="c"># → ✗ rejected (nullifier already spent)</span></code></pre>
+
+      <nav class="prevnext">
+        <a href="installation.html"><span class="k">← Prev</span><span class="t">Installation</span></a>
+        <a class="next" href="token.html"><span class="k">Next →</span><span class="t">$TNULL token</span></a>
+      </nav>
+      <footer class="dfoot">© 2026 tasknull · <a href="../index.html">home</a></footer>
+    </article>
+  </main>
+</div>
+</body>
+</html>

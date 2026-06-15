@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Core concepts — tasknull docs</title>
+<meta name="description" content="Identities, commitments, nullifiers, and proofs — the cryptography behind tasknull."/>
+<meta name="theme-color" content="#07080c"/>
+<link rel="icon" type="image/png" href="../assets/favicon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="docs.css"/>
+</head>
+<body>
+<input type="checkbox" id="navtoggle">
+<header class="dtop">
+  <label for="navtoggle" class="burger" aria-label="Toggle menu">≡</label>
+  <a class="dbrand" href="../index.html"><img src="../assets/logo-64.png" width="22" height="22" alt=""/><span><span class="t">task</span><span class="n">null</span> <span class="docs">docs</span></span></a>
+  <div class="dtop-right">
+    <a href="../index.html">Home</a>
+    <a href="https://github.com/tasknull/tasknull" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+<div class="dlayout">
+  <aside class="side">
+    <nav>
+      <div class="sgroup"><div class="stitle">Getting started</div>
+        <a href="index.html">Introduction</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="concepts.html" class="active">Core concepts</a>
+      </div>
+      <div class="sgroup"><div class="stitle">Using the CLI</div>
+        <a href="installation.html">Installation</a>
+        <a href="cli.html">CLI reference</a>
+      </div>
+      <div class="sgroup"><div class="stitle">Protocol</div>
+        <a href="token.html">$TNULL token</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+    </nav>
+  </aside>
+  <main class="dcontent">
+    <article>
+      <span class="eyebrow">/ core concepts</span>
+      <h1>Core concepts</h1>
+      <p class="lead">The four primitives tasknull is built on. The reference CLI implements all of them with Node's standard <code>crypto</code> — Ed25519 signatures and SHA-256 hashing.</p>
+
+      <h2>Identity &amp; secret</h2>
+      <p>Running <code>tasknull init</code> generates two things, stored locally in <code>~/.tasknull</code>:</p>
+      <ul>
+        <li>a 32-byte random <strong>secret</strong> — the root of your nullifiers; it never leaves your machine and is never put on-chain;</li>
+        <li>an <strong>Ed25519 keypair</strong> used to sign completion proofs.</li>
+      </ul>
+      <p>Your public <strong>identity commitment</strong> is <code>SHA256(publicKey)</code> — safe to share, and it reveals nothing about your secret.</p>
+
+      <h2>Commitment</h2>
+      <p>A commitment binds a solution to a bounty without revealing the solution:</p>
+      <pre><code>commitment = SHA256( bounty ‖ SHA256(solution) ‖ secret )</code></pre>
+      <p>Publishing it lets you prove later that you held this exact solution for this exact bounty, while keeping the work hidden until you choose to reveal it.</p>
+
+      <h2>Nullifier</h2>
+      <p>The nullifier is the heart of double-claim prevention:</p>
+      <pre><code>nullifier = SHA256( "nullifier" ‖ secret ‖ bounty )</code></pre>
+      <ul>
+        <li><strong>Deterministic</strong> per <code>(secret, bounty)</code> — the same identity proving the same bounty twice yields the <em>same</em> nullifier, so the second claim collides and is rejected.</li>
+        <li><strong>One-way</strong> — it's a hash of your secret, so it can't be reversed to recover the secret.</li>
+        <li><strong>Unlinkable</strong> — on its own it looks like random bytes; it doesn't reveal which identity produced it.</li>
+      </ul>
+
+      <h2>Proof</h2>
+      <p>A proof is a JSON object signed with your Ed25519 key. It carries everything a verifier needs:</p>
+      <pre><code>{
+  <span class="s">"bounty"</span>: "zk-audit-114",
+  <span class="s">"solutionHash"</span>: "…",
+  <span class="s">"commitment"</span>: "…",
+  <span class="s">"nullifier"</span>: "…",
+  <span class="s">"payout"</span>: "0x…",
+  <span class="s">"publicKey"</span>: "…",
+  <span class="s">"signature"</span>: "…"
+}</code></pre>
+      <p>Verification re-checks the signature over the exact payload, so any tampering — changing the payout, the bounty, or the nullifier — invalidates the proof.</p>
+
+      <h2>The privacy model — honestly</h2>
+      <div class="note warn">The v0.1 CLI gives you commitments, nullifiers, signature integrity, and double-claim prevention as a working local prototype. <b>Full zero-knowledge unlinkability</b> (ring / membership proofs that hide which registered member signed) is part of the protocol's design and lands with the ZK circuit — it is not in this reference release. Plan your operational privacy accordingly.</div>
+
+      <nav class="prevnext">
+        <a href="how-it-works.html"><span class="k">← Prev</span><span class="t">How it works</span></a>
+        <a class="next" href="installation.html"><span class="k">Next →</span><span class="t">Installation</span></a>
+      </nav>
+      <footer class="dfoot">© 2026 tasknull · <a href="../index.html">home</a></footer>
+    </article>
+  </main>
+</div>
+</body>
+</html>

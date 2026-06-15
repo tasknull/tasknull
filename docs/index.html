@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Introduction — tasknull docs</title>
+<meta name="description" content="tasknull documentation — anonymous, nullifier-backed proof-of-completion for on-chain bounties."/>
+<meta name="theme-color" content="#07080c"/>
+<link rel="icon" type="image/png" href="../assets/favicon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="docs.css"/>
+</head>
+<body>
+<input type="checkbox" id="navtoggle">
+<header class="dtop">
+  <label for="navtoggle" class="burger" aria-label="Toggle menu">≡</label>
+  <a class="dbrand" href="../index.html"><img src="../assets/logo-64.png" width="22" height="22" alt=""/><span><span class="t">task</span><span class="n">null</span> <span class="docs">docs</span></span></a>
+  <div class="dtop-right">
+    <a href="../index.html">Home</a>
+    <a href="https://github.com/tasknull/tasknull" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+<div class="dlayout">
+  <aside class="side">
+    <nav>
+      <div class="sgroup"><div class="stitle">Getting started</div>
+        <a href="index.html" class="active">Introduction</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="concepts.html">Core concepts</a>
+      </div>
+      <div class="sgroup"><div class="stitle">Using the CLI</div>
+        <a href="installation.html">Installation</a>
+        <a href="cli.html">CLI reference</a>
+      </div>
+      <div class="sgroup"><div class="stitle">Protocol</div>
+        <a href="token.html">$TNULL token</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+    </nav>
+  </aside>
+  <main class="dcontent">
+    <article>
+      <span class="eyebrow">/ introduction</span>
+      <h1>tasknull documentation</h1>
+      <p class="lead">tasknull turns a completed bounty into a cryptographic receipt. Reviewers can confirm the work is real and that the claim can't be spent twice — <strong>without ever learning which wallet did it.</strong></p>
+
+      <h2>The problem</h2>
+      <p>Today, claiming a bounty usually means doxxing yourself. Either your wallet is attached to the payout for everyone to trace, or your contribution can't be trusted. There is no middle ground: privacy and provability seem to pull in opposite directions.</p>
+
+      <h2>The third path</h2>
+      <p>tasknull adds a third option — <strong>provable completion with an unlinkable identity</strong>. It rests on three guarantees:</p>
+      <ul>
+        <li><strong>Verifiable completion</strong> — every claim carries a proof that the bounty's acceptance criteria were met. Reviewers check the math, not your reputation.</li>
+        <li><strong>Unlinkable identity</strong> — the payout wallet and the proof are cryptographically separated. A verifier learns <em>"valid hunter"</em>, never <em>which</em> hunter.</li>
+        <li><strong>No double-claims</strong> — each claim emits a one-way <strong>nullifier</strong>. Reuse the same solution twice and the second nullifier collides, so the claim is rejected.</li>
+      </ul>
+
+      <h2>Who it's for</h2>
+      <ul>
+        <li><strong>Security researchers</strong> — claim a disclosure bounty without tying the patch or the payout to a real name or employer.</li>
+        <li><strong>Freelance hunters</strong> — build a track record through stable nullifiers while keeping every wallet single-use and clean.</li>
+        <li><strong>DAO contributors</strong> — let a treasury reward completed work on-chain without a public map of who did what for whom.</li>
+      </ul>
+
+      <div class="note"><b>Status — v0.1 reference implementation.</b> The cryptography (identity, commitments, nullifiers, signatures, double-claim prevention) is real and runs locally today via the CLI. On-chain settlement on Base is <b>simulated locally</b> until the <code>$TNULL</code> contract launches (contract address <b>TBA</b>).</div>
+
+      <h2>Where to go next</h2>
+      <ul>
+        <li><a href="how-it-works.html">How it works</a> — the commit → prove → settle flow.</li>
+        <li><a href="concepts.html">Core concepts</a> — identities, commitments, and nullifiers explained.</li>
+        <li><a href="installation.html">Installation</a> — get the CLI running in a minute.</li>
+        <li><a href="cli.html">CLI reference</a> — every command, with examples.</li>
+      </ul>
+
+      <nav class="prevnext">
+        <a class="next" href="how-it-works.html"><span class="k">Next →</span><span class="t">How it works</span></a>
+      </nav>
+      <footer class="dfoot">© 2026 tasknull · <a href="../index.html">home</a> · proof of completion, not identity</footer>
+    </article>
+  </main>
+</div>
+</body>
+</html>

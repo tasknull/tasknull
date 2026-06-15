@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Installation — tasknull docs</title>
+<meta name="description" content="Install the tasknull CLI in a minute. Requires Node.js 18+."/>
+<meta name="theme-color" content="#07080c"/>
+<link rel="icon" type="image/png" href="../assets/favicon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="docs.css"/>
+</head>
+<body>
+<input type="checkbox" id="navtoggle">
+<header class="dtop">
+  <label for="navtoggle" class="burger" aria-label="Toggle menu">≡</label>
+  <a class="dbrand" href="../index.html"><img src="../assets/logo-64.png" width="22" height="22" alt=""/><span><span class="t">task</span><span class="n">null</span> <span class="docs">docs</span></span></a>
+  <div class="dtop-right">
+    <a href="../index.html">Home</a>
+    <a href="https://github.com/tasknull/tasknull" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+<div class="dlayout">
+  <aside class="side">
+    <nav>
+      <div class="sgroup"><div class="stitle">Getting started</div>
+        <a href="index.html">Introduction</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="concepts.html">Core concepts</a>
+      </div>
+      <div class="sgroup"><div class="stitle">Using the CLI</div>
+        <a href="installation.html" class="active">Installation</a>
+        <a href="cli.html">CLI reference</a>
+      </div>
+      <div class="sgroup"><div class="stitle">Protocol</div>
+        <a href="token.html">$TNULL token</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+    </nav>
+  </aside>
+  <main class="dcontent">
+    <article>
+      <span class="eyebrow">/ installation</span>
+      <h1>Installation</h1>
+      <p class="lead">The tasknull CLI is plain Node.js with <strong>zero dependencies</strong> (only the standard <code>crypto</code> module).</p>
+
+      <h2>Requirements</h2>
+      <ul>
+        <li><strong>Node.js 18 or newer</strong> — check with <code>node -v</code>.</li>
+        <li><strong>git</strong> — to clone the repository.</li>
+      </ul>
+
+      <h2>Install globally</h2>
+      <p>This adds a <code>tasknull</code> command to your shell:</p>
+      <pre><code><span class="p">$</span> git clone https://github.com/tasknull/tasknull.git
+<span class="p">$</span> cd tasknull/cli
+<span class="p">$</span> npm install -g .</code></pre>
+      <p>Verify it works:</p>
+      <pre><code><span class="p">$</span> tasknull --version
+tasknull v0.1.0</code></pre>
+
+      <h2>Run without installing</h2>
+      <p>Prefer not to install globally? Run it straight from the cloned folder:</p>
+      <pre><code><span class="p">$</span> node bin/tasknull.js --help</code></pre>
+
+      <h2>Where your data lives</h2>
+      <p>The CLI stores everything under <code>~/.tasknull</code>:</p>
+      <table>
+        <tr><th>File</th><th>Contents</th></tr>
+        <tr><td><code>identity.json</code></td><td>Your secret + Ed25519 keys. <strong>Keep this private and back it up.</strong></td></tr>
+        <tr><td><code>spent.json</code></td><td>Nullifiers burned on this machine.</td></tr>
+      </table>
+      <div class="note tip">Override the location with the <code>TASKNULL_HOME</code> environment variable — handy for testing or keeping separate identities.</div>
+
+      <div class="note warn"><b>Back up <code>identity.json</code>.</b> Your secret is the root of your nullifiers and signatures. There is no recovery if you lose it.</div>
+
+      <nav class="prevnext">
+        <a href="concepts.html"><span class="k">← Prev</span><span class="t">Core concepts</span></a>
+        <a class="next" href="cli.html"><span class="k">Next →</span><span class="t">CLI reference</span></a>
+      </nav>
+      <footer class="dfoot">© 2026 tasknull · <a href="../index.html">home</a></footer>
+    </article>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>How it works — tasknull docs</title>
+<meta name="description" content="The commit, prove, and settle flow behind tasknull."/>
+<meta name="theme-color" content="#07080c"/>
+<link rel="icon" type="image/png" href="../assets/favicon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="docs.css"/>
+</head>
+<body>
+<input type="checkbox" id="navtoggle">
+<header class="dtop">
+  <label for="navtoggle" class="burger" aria-label="Toggle menu">≡</label>
+  <a class="dbrand" href="../index.html"><img src="../assets/logo-64.png" width="22" height="22" alt=""/><span><span class="t">task</span><span class="n">null</span> <span class="docs">docs</span></span></a>
+  <div class="dtop-right">
+    <a href="../index.html">Home</a>
+    <a href="https://github.com/tasknull/tasknull" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+<div class="dlayout">
+  <aside class="side">
+    <nav>
+      <div class="sgroup"><div class="stitle">Getting started</div>
+        <a href="index.html">Introduction</a>
+        <a href="how-it-works.html" class="active">How it works</a>
+        <a href="concepts.html">Core concepts</a>
+      </div>
+      <div class="sgroup"><div class="stitle">Using the CLI</div>
+        <a href="installation.html">Installation</a>
+        <a href="cli.html">CLI reference</a>
+      </div>
+      <div class="sgroup"><div class="stitle">Protocol</div>
+        <a href="token.html">$TNULL token</a>
+        <a href="faq.html">FAQ</a>
+      </div>
+    </nav>
+  </aside>
+  <main class="dcontent">
+    <article>
+      <span class="eyebrow">/ how it works</span>
+      <h1>How it works</h1>
+      <p class="lead">Three steps, one CLI. The signing happens entirely on your machine — no coordinator, no custodian, no account.</p>
+
+      <h2>The flow</h2>
+      <ol class="steps">
+        <li><strong>Commit</strong> — hash your solution against the bounty's criteria and publish the commitment. Nothing about your identity leaves the machine.</li>
+        <li><strong>Prove</strong> — the CLI derives a one-way nullifier from your secret and signs a completion proof. Reveal it whenever you're ready to claim.</li>
+        <li><strong>Settle</strong> — anyone can verify the proof and the nullifier. Once it checks out, the reward releases to a fresh address you control.</li>
+      </ol>
+
+      <h2>1 · Commit</h2>
+      <p>You bind your work to a specific bounty with a hiding commitment. This lets you timestamp that you had the solution, without revealing it yet.</p>
+      <pre><code><span class="p">$</span> tasknull commit <span class="s">--bounty</span> zk-audit-114 <span class="s">--file</span> ./solution.txt</code></pre>
+
+      <h2>2 · Prove</h2>
+      <p>When you're ready to claim, generate a signed proof. It contains the commitment, a one-way <strong>nullifier</strong> derived from your secret and the bounty, and the fresh payout address — all signed with your identity key.</p>
+      <pre><code><span class="p">$</span> tasknull prove <span class="s">--bounty</span> zk-audit-114 <span class="s">--file</span> ./solution.txt \
+    <span class="s">--to</span> 0xYourFreshAddress <span class="s">--out</span> proof.json</code></pre>
+
+      <h2>3 · Settle</h2>
+      <p>Anyone can verify the proof — no trust in you required. Settling burns the nullifier so the same work can never be claimed twice.</p>
+      <pre><code><span class="p">$</span> tasknull verify proof.json
+<span class="p">$</span> tasknull claim proof.json</code></pre>
+
+      <div class="note tip">The payout goes to the address in the proof, which has no on-chain link to your identity key. A verifier confirms a valid hunter completed the work — never which one.</div>
+
+      <h2>Why double-claims fail</h2>
+      <p>The nullifier is deterministic for a given <code>(secret, bounty)</code> pair. Proving the same bounty again with the same identity produces the <em>same</em> nullifier — so the second claim collides with the first and is rejected, while the nullifier still reveals nothing about your secret.</p>
+
+      <div class="note"><b>Try it:</b> claim a proof twice and watch the second attempt fail. See the <a href="cli.html">CLI reference</a> for a full walkthrough.</div>
+
+      <nav class="prevnext">
+        <a href="index.html"><span class="k">← Prev</span><span class="t">Introduction</span></a>
+        <a class="next" href="concepts.html"><span class="k">Next →</span><span class="t">Core concepts</span></a>
+      </nav>
+      <footer class="dfoot">© 2026 tasknull · <a href="../index.html">home</a></footer>
+    </article>
+  </main>
+</div>
+</body>
+</html>
