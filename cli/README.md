@@ -8,7 +8,7 @@ It is written in plain **Node.js (≥ 18)** with **zero dependencies** (only the
 
 > **Status — v0.1 reference implementation.** The cryptography is real and works locally.
 > On-chain settlement on Solana is **simulated locally** (the nullifier is recorded in a local
-> registry) until the `$TNULL` contract is live. Use it to learn, test, and integrate against.
+> registry) until the `$TNULL` program is live. Use it to learn, test, and integrate against.
 
 ## Install
 
@@ -51,7 +51,7 @@ tasknull claim proof.json
 | Command | What it does |
 |---|---|
 | `tasknull init` | Create your local identity (`secret` + Ed25519 keys). `--force` overwrites. |
-| `tasknull whoami` | Print your public **identity commitment** (safe to share). |
+| `tasknull whoami` | Print your public **Solana address** (safe to share). |
 | `tasknull commit --bounty <id> --file <path>` | Publish a hiding **commitment** binding a solution to a bounty. |
 | `tasknull prove --bounty <id> --file <path> --to <SOL_ADDR>` | Emit a signed proof JSON with a one-way **nullifier**. `--out <file>`, `--scope`, `--reward` optional. |
 | `tasknull verify <proof.json>` | Check signature, structure, nullifier freshness, scope. Exit `0` = valid. |
@@ -62,7 +62,7 @@ tasknull claim proof.json
 ## How it works
 
 - **Identity** — `init` generates a 32-byte `secret` and an Ed25519 keypair, stored locally. Your
-  public *identity commitment* = `SHA256(publicKey)` can be shared; the secret never leaves the box.
+  public **Solana address** (a base58 Ed25519 pubkey) can be shared; the secret never leaves the box.
 - **Commitment** — `SHA256(bounty ‖ SHA256(solution) ‖ secret)` binds your work to a bounty without
   revealing it.
 - **Nullifier** — `SHA256("nullifier" ‖ secret ‖ bounty)`. It is **deterministic** per

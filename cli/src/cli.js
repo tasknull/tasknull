@@ -6,7 +6,6 @@ const C = require('./crypto');
 const store = require('./store');
 const pkg = require('../package.json');
 
-const ADDR_RE = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/; // Solana base58 address
 const HEX64 = /^[0-9a-f]{64}$/;
 
 // ---- tiny colour helpers (skip codes when not a TTY, e.g. piped output) ----
@@ -34,7 +33,7 @@ ${amber('USAGE')}
 
 ${amber('COMMANDS')}
   init                 Create your local identity (secret + signing keys)
-  whoami               Show your public identity commitment
+  whoami               Show your public Solana address
   commit               Lock a solution to a bounty (publishes a commitment)
     --bounty <id>        bounty identifier            (required)
     --file <path>        path to your solution        (required)
@@ -87,19 +86,18 @@ function cmdInit(args) {
   }
   const secret = C.newSecret();
   const kp = C.newKeypair();
-  const idc = C.identityCommitment(kp.publicKeyPem);
   store.saveIdentity({
-    version: 1, secret, ...kp, identityCommitment: idc, createdAt: new Date().toISOString(),
+    version: 1, secret, ...kp, createdAt: new Date().toISOString(),
   });
   console.log(ok('✓ identity created') + '  ' + dim('→ ' + store.IDENTITY));
-  console.log('  identity commitment  ' + amber(idc.slice(0, 24) + '…'));
+  console.log('  Solana address  ' + amber(kp.address));
   console.log(dim('  your secret never leaves this machine — back up this folder, keep it private.'));
 }
 
 function cmdWhoami() {
   const id = store.loadIdentity();
-  console.log('identity commitment  ' + amber(id.identityCommitment));
-  console.log('created              ' + dim(id.createdAt));
+  console.log('Solana address  ' + amber(id.address));
+  console.log('created         ' + dim(id.createdAt));
 }
 
 function cmdCommit(args) {
@@ -125,7 +123,7 @@ function buildProof(id, bounty, solutionHash, payout, opts) {
     commitment: C.commitment(id.secret, bounty, solutionHash),
     nullifier: C.nullifier(id.secret, bounty),
     payout,
-    publicKey: id.publicKeyPem,
+    publicKey: id.address,
     createdAt: new Date().toISOString(),
   };
   const signature = C.sign(id.privateKeyPem, JSON.stringify(payload));
@@ -136,7 +134,7 @@ function cmdProve(args) {
   const bounty = need(args.bounty, '--bounty <id> required');
   const file = need(args.file, '--file <path> required');
   const payout = need(args.to, '--to <SOL_ADDRESS> required');
-  if (!ADDR_RE.test(payout)) die('invalid --to address (expected a Solana base58 address, 32-44 chars)');
+  if (!C.isAddress(payout)) die('invalid --to address (expected a Solana base58 address)');
   if (!fs.existsSync(file)) die('file not found: ' + file);
   const id = store.loadIdentity();
   const proof = buildProof(id, bounty, C.hashFile(file), payout, { scope: args.scope, reward: args.reward });

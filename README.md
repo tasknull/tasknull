@@ -37,7 +37,7 @@ at **[taksnull.xyz](https://taksnull.xyz)** → **[taksnull.xyz/docs](https://ta
 
 > **Status — v0.1 reference implementation.** The cryptography (identity, commitments, nullifiers,
 > signatures, double-claim prevention) is real and runs locally today. On-chain settlement on Solana
-> is **simulated locally** until the `$TNULL` contract launches (address **TBA**).
+> is **simulated locally** until the `$TNULL` program launches (mint **TBA**).
 
 ## Contents
 
@@ -147,7 +147,7 @@ That's the whole lifecycle.
 | Command | What it does |
 |---|---|
 | `tasknull init` | Create your local identity (secret + Ed25519 keys). `--force` to overwrite. |
-| `tasknull whoami` | Print your public identity commitment. |
+| `tasknull whoami` | Print your public Solana address. |
 | `tasknull commit --bounty <id> --file <path>` | Publish a hiding commitment for a solution. |
 | `tasknull prove --bounty <id> --file <path> --to <SOL_ADDR>` | Emit a signed proof + nullifier. Options: `--out`, `--scope`, `--reward`. |
 | `tasknull verify <proof.json>` | Verify signature, structure, nullifier freshness, scope. |
@@ -170,7 +170,7 @@ Run `tasknull --help` any time. Full guides: **[taksnull.xyz/docs](https://taksn
   "commitment": "b65c3b9f…2e54",
   "nullifier": "b2cff474…e0c1",
   "payout": "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
-  "publicKey": "-----BEGIN PUBLIC KEY----- …",
+  "publicKey": "BrvFkjhE5yZWokxtFU6A8eFFfDeRLygWxxLyD9FTCkBJ",
   "createdAt": "2026-06-14T08:05:21.321Z",
   "signature": "…"
 }
@@ -200,7 +200,7 @@ Read the full explanation in the [docs → Core concepts](https://taksnull.xyz/d
 ```text
 $ tasknull init
 ✓ identity created  → ~/.tasknull/identity.json
-  identity commitment  fbbdff6c747db41a7171bae0…
+  Solana address  BrvFkjhE5yZWokxtFU6A8eFFfDeRLygWxxLyD9FTCkBJ
 
 $ tasknull prove --bounty zk-audit-114 --file solution.txt --to 7xKX…osgAsU --out proof.json
 ✓ proof written  → proof.json
@@ -263,7 +263,7 @@ State is stored under `~/.tasknull` (override with the `TASKNULL_HOME` env var):
 - [x] Signed proofs + offline verification
 - [x] Local double-claim prevention
 - [ ] On-chain nullifier registry + settlement on **Solana**
-- [ ] `$TNULL` reward contract
+- [ ] `$TNULL` reward program
 - [ ] Zero-knowledge membership proofs (full unlinkability)
 - [ ] Hosted verifier API + browser verifier
 
@@ -307,7 +307,7 @@ For larger ideas, open an issue first so we can align on direction.
 ## FAQ
 
 **Is tasknull live on-chain?**
-Not yet. The CLI runs locally today; on-chain settlement on Solana ships with the `$TNULL` contract.
+Not yet. The CLI runs locally today; on-chain settlement on Solana ships with the `$TNULL` program.
 
 **Does it send anything over the network?**
 No. Everything runs locally and your secret never leaves your machine.
