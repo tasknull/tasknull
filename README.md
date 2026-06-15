@@ -7,8 +7,8 @@
 Anonymous, nullifier-backed proof-of-completion for on-chain bounties — settled on Base.
 This repository is the **`tasknull` command-line tool** and how to use it.
 
-[![Website](https://img.shields.io/badge/website-tasknull.xyz-f2b441?style=flat-square)](https://tasknull.xyz)
-[![Docs](https://img.shields.io/badge/docs-tasknull.xyz%2Fdocs-f97316?style=flat-square)](https://tasknull.xyz/docs/)
+[![Website](https://img.shields.io/badge/website-taksnull.xyz-f2b441?style=flat-square)](https://taksnull.xyz)
+[![Docs](https://img.shields.io/badge/docs-taksnull.xyz%2Fdocs-f97316?style=flat-square)](https://taksnull.xyz/docs/)
 [![X](https://img.shields.io/badge/follow-@TaskNull-1da1f2?style=flat-square&logo=x&logoColor=white)](https://x.com/TaskNull)
 [![Node](https://img.shields.io/badge/node-%E2%89%A518-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org)
 [![License: MIT](https://img.shields.io/badge/license-MIT-63cad6?style=flat-square)](LICENSE)
@@ -33,7 +33,7 @@ everyone to trace, or your contribution can't be trusted. `tasknull` adds a thir
 **commitments**, one-way **nullifiers**, and signed **proofs**.
 
 This repository contains the **CLI** only. The website and the full, multi-page documentation live
-at **[tasknull.xyz](https://tasknull.xyz)** → **[tasknull.xyz/docs](https://tasknull.xyz/docs/)**.
+at **[taksnull.xyz](https://taksnull.xyz)** → **[taksnull.xyz/docs](https://taksnull.xyz/docs/)**.
 
 > **Status — v0.1 reference implementation.** The cryptography (identity, commitments, nullifiers,
 > signatures, double-claim prevention) is real and runs locally today. On-chain settlement on Base
@@ -154,7 +154,7 @@ That's the whole lifecycle.
 | `tasknull claim <proof.json>` | Settle a proof — burns the nullifier locally. |
 | `tasknull spent` | List nullifiers spent on this machine. |
 
-Run `tasknull --help` any time. Full guides: **[tasknull.xyz/docs](https://tasknull.xyz/docs/)**.
+Run `tasknull --help` any time. Full guides: **[taksnull.xyz/docs](https://taksnull.xyz/docs/)**.
 
 ## Understanding a proof
 
@@ -193,7 +193,7 @@ Run `tasknull --help` any time. Full guides: **[tasknull.xyz/docs](https://taskn
 - **Proof** — a signed JSON object; verification re-checks the Ed25519 signature over the exact
   payload, so any tampering is caught.
 
-Read the full explanation in the [docs → Core concepts](https://tasknull.xyz/docs/concepts.html).
+Read the full explanation in the [docs → Core concepts](https://taksnull.xyz/docs/concepts.html).
 
 ## Example session
 
@@ -285,7 +285,7 @@ tasknull/                 (main branch — this repo)
 ```
 
 The website and documentation live on the **`gh-pages`** branch and are served at
-[tasknull.xyz](https://tasknull.xyz).
+[taksnull.xyz](https://taksnull.xyz).
 
 ## Contributing
 
@@ -300,7 +300,7 @@ For larger ideas, open an issue first so we can align on direction.
 
 ## Support
 
-- 📚 Docs — [tasknull.xyz/docs](https://tasknull.xyz/docs/)
+- 📚 Docs — [taksnull.xyz/docs](https://taksnull.xyz/docs/)
 - 🐛 Issues — [github.com/tasknull/tasknull/issues](https://github.com/tasknull/tasknull/issues)
 - 𝕏 — [@TaskNull](https://x.com/TaskNull)
 
